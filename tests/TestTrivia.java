@@ -4,10 +4,22 @@ import org.junit.Test;
 
 public class TestTrivia {
     Trivia trivia;
+    Trivia trivia2;
+    Trivia trivia3;
 
     @Before
     public void setup() {
-        trivia = new Trivia("245325632543", "easy", "What's up?", "Nothing", new String[] {
+        trivia = new Trivia("245325632543", "What's up?", "easy", "Nothing", new String[] {
+                "Something",
+                "Everything",
+                "Shut up"
+        });
+        trivia2 = new Trivia("245325632543", "What's up?", "medium", "Nothing", new String[] {
+                "Something",
+                "Everything",
+                "Shut up"
+        });
+        trivia3 = new Trivia("245325632543", "What's up?", "hard", "Nothing", new String[] {
                 "Something",
                 "Everything",
                 "Shut up"
@@ -46,5 +58,7 @@ public class TestTrivia {
     @Test
     public void testValue() {
         Assert.assertEquals(1, trivia.getValue());
+        Assert.assertEquals(3, trivia2.getValue());
+        Assert.assertEquals(5, trivia3.getValue());
     }
 }

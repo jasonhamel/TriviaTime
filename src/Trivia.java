@@ -10,6 +10,7 @@ public class Trivia {
     public Trivia(String id, String question, String difficulty, String correctAnswer, String[] incorrectAnswers) {
         this.id = id;
         this.question = question;
+        setValue(difficulty);
         this.correctAnswer = correctAnswer;
         this.incorrectAnswers = new String[] {
                 incorrectAnswers[0],
@@ -18,7 +19,6 @@ public class Trivia {
                 null
         };
         this.validQuestion = true;
-        setValue(difficulty);
     }
 
     public String getQuestion() {
