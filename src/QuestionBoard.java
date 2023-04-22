@@ -44,21 +44,21 @@ public class QuestionBoard {
                 difficulty = "hard";
             }
             category = "geography";
-            geography[i] = getNewQuestion(difficulty, category);
+            geography[i] = callAPI(difficulty, category);
             geography[i].setValue(difficulty);
             geography[i].setValidQuestion(true);
             category = "history";
-            history[i] = getNewQuestion(difficulty, category);
+            history[i] = callAPI(difficulty, category);
             history[i].setValue(difficulty);
             history[i].setValidQuestion(true);
             category = "music";
-            music[i] = getNewQuestion(difficulty, category);
+            music[i] = callAPI(difficulty, category);
             music[i].setValue(difficulty);
             music[i].setValidQuestion(true);
         }
     }
 
-    public static Trivia getNewQuestion(String difficulty, String category) throws IOException {
+    public static Trivia callAPI(String difficulty, String category) throws IOException {
         String urlString = "https://the-trivia-api.com/api/questions?categories=";
         String betweenCategoryAndDifficulty = "&limit=1&difficulty=";
         URL url = new URL(urlString + category + betweenCategoryAndDifficulty + difficulty);
@@ -81,6 +81,11 @@ public class QuestionBoard {
     }
 
     public Trivia getQuestion(String category, int amount) {
-        return board.get(category)[amount - 1];
+        Trivia question = board.get(category)[amount - 1];
+        if (!question.isQuestionValid()) {
+            return null;
+        }
+        question.setValidQuestion(false);
+        return question;
     }
 }
