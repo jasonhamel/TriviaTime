@@ -58,7 +58,7 @@ public class QuestionBoard {
         }
     }
 
-    public static Trivia callAPI(String difficulty, String category) throws IOException {
+    private static Trivia callAPI(String difficulty, String category) throws IOException {
         String urlString = "https://the-trivia-api.com/api/questions?categories=";
         String betweenCategoryAndDifficulty = "&limit=1&difficulty=";
         URL url = new URL(urlString + category + betweenCategoryAndDifficulty + difficulty);

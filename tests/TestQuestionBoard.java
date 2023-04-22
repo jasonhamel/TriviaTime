@@ -35,13 +35,6 @@ public class TestQuestionBoard {
     }
 
     @Test
-    public void testCallAPI() throws IOException {
-        Trivia trivia;
-        trivia = QuestionBoard.callAPI("easy", "Music");
-        Assert.assertNotNull(trivia.getQuestion());
-    }
-
-    @Test
     public void testValidity() throws IOException {
         Trivia trivia1 = QuestionBoard.getInstance().getQuestion("Music", 1);
         Trivia trivia2 = QuestionBoard.getInstance().getQuestion("Music", 1);
