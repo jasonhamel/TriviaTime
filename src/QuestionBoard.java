@@ -33,39 +33,41 @@ public class QuestionBoard {
     }
 
     private void populateBoard() throws IOException {
-        String difficulty;
         String category;
-        for (int i = 0; i < 5; i++) {
-            if (i <= 1) {
-                difficulty = "easy";
-            } else if (i <= 3) {
-                difficulty = "medium";
-            } else {
-                difficulty = "hard";
-            }
+        int positionInArray = 0;
+        for (int i = 100; i < 600; i += 100) {
             category = "geography";
-            geography[i] = callAPI(difficulty, category);
-            geography[i].setValue(difficulty);
-            geography[i].setValidQuestion(true);
+            geography[positionInArray] = callAPI(i, category);
+            geography[positionInArray].setValue(i);
+            geography[positionInArray].setValidQuestion(true);
             category = "history";
-            history[i] = callAPI(difficulty, category);
-            history[i].setValue(difficulty);
-            history[i].setValidQuestion(true);
+            history[positionInArray] = callAPI(i, category);
+            history[positionInArray].setValue(i);
+            history[positionInArray].setValidQuestion(true);
             category = "music";
-            music[i] = callAPI(difficulty, category);
-            music[i].setValue(difficulty);
-            music[i].setValidQuestion(true);
+            music[positionInArray] = callAPI(i, category);
+            music[positionInArray].setValue(i);
+            music[positionInArray].setValidQuestion(true);
+            positionInArray++;
         }
     }
 
-    private static Trivia callAPI(String difficulty, String category) throws IOException {
+    private static Trivia callAPI(int i, String category) throws IOException {
         String urlString = "https://the-trivia-api.com/api/questions?categories=";
         String betweenCategoryAndDifficulty = "&limit=1&difficulty=";
+        String difficulty;
+        if (i < 300) {
+            difficulty = "easy";
+        } else if (i < 500) {
+            difficulty = "medium";
+        } else {
+            difficulty = "hard";
+        }
         URL url = new URL(urlString + category + betweenCategoryAndDifficulty + difficulty);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         String inputLine = "";
-
+        System.out.println(connection.getResponseCode());
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             inputLine = in.readLine();
@@ -81,11 +83,16 @@ public class QuestionBoard {
     }
 
     public Trivia getQuestion(String category, int amount) {
-        Trivia question = board.get(category)[amount - 1];
+        int placeInArray = Integer.parseInt(String.valueOf(String.valueOf(amount).charAt(0)));
+        Trivia question = board.get(category)[placeInArray - 1];
         if (!question.isQuestionValid()) {
             return null;
         }
-        question.setValidQuestion(false);
         return question;
+    }
+
+    public QuestionBoard clear() {
+        instance = null;
+        return instance;
     }
 }

@@ -42,4 +42,8 @@ public class Scoreboard {
         }
         return "Player 2 wins with a score of " + player2 + ". Player 1 lost with a score of " + player1;
     }
+
+    public void clear() {
+        instance = null;
+    }
 }

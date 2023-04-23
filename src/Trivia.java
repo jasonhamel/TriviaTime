@@ -7,7 +7,7 @@ public class Trivia {
     private int value;
     private boolean validQuestion;
 
-    public Trivia(String id, String question, String difficulty, String correctAnswer, String[] incorrectAnswers) {
+    public Trivia(String id, String question, int difficulty, String correctAnswer, String[] incorrectAnswers) {
         this.id = id;
         this.question = question;
         setValue(difficulty);
@@ -41,14 +41,8 @@ public class Trivia {
         return this.value;
     }
 
-    public void setValue(String difficulty) {
-        if (difficulty.equals("easy")) {
-            this.value = 1;
-        } else if (difficulty.equals("medium")) {
-            this.value = 3;
-        } else {
-            this.value = 5;
-        }
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public void setValidQuestion(Boolean trueFalse) {
