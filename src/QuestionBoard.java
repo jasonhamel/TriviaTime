@@ -83,16 +83,36 @@ public class QuestionBoard {
     }
 
     public Trivia getQuestion(String category, int amount) {
-        int placeInArray = Integer.parseInt(String.valueOf(String.valueOf(amount).charAt(0)));
-        Trivia question = board.get(category)[placeInArray - 1];
-        if (!question.isQuestionValid()) {
-            return null;
-        }
-        return question;
+        category = category.substring(0, 1).toUpperCase() + category.substring(1).toLowerCase();
+        int placeInArray = Integer.parseInt(String.valueOf(String.valueOf(amount).charAt(0))) - 1;
+        return board.get(category)[placeInArray];
     }
 
     public QuestionBoard clear() {
         instance = null;
         return instance;
+    }
+
+    public String print() {
+        String string = "\n\tGeography\tHistory\t  Music";
+        for (int i = 0; i < 5; i++) {
+            string += "\n";
+            if (board.get("Geography")[i].isQuestionValid()) {
+                string += "\t" + ( i + 1 ) + "00\t\t  ";
+            } else if (!board.get("Geography")[i].isQuestionValid()) {
+                string += "\tempty\t";
+            }
+            if (board.get("History")[i].isQuestionValid()) {
+                string += "\t" + (i + 1) + "00\t";
+            } else if (!board.get("History")[i].isQuestionValid()) {
+                string += "\tempty";
+            }
+            if (board.get("Music")[i].isQuestionValid()) {
+                string += "\t  " + (i + 1) + "00";
+            } else if (!board.get("Music")[i].isQuestionValid()) {
+                string += "\t  empty";
+            }
+        }
+        return string;
     }
 }

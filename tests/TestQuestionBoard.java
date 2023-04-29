@@ -50,9 +50,9 @@ public class TestQuestionBoard {
         QuestionBoard.getInstance().getQuestion("History", 100).setValidQuestion(false);
         Trivia trivia4 = QuestionBoard.getInstance().getQuestion("History", 100);
         Assert.assertNotNull(trivia1);
-        Assert.assertNull(trivia2);
+        Assert.assertFalse(trivia2.isQuestionValid());
         Assert.assertNotNull(trivia3);
-        Assert.assertNull(trivia4);
+        Assert.assertFalse(trivia4.isQuestionValid());
         Assert.assertEquals(question, QuestionBoard.getInstance().getQuestion("Geography", 100).getQuestion());
     }
 
