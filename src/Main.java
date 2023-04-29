@@ -45,20 +45,46 @@ public class Main {
                 QuestionBoard.getInstance().getQuestion(category, points).setValidQuestion(false);
                 scan.nextLine();
             } else {
+                System.out.println("This question was already selected. Please choose another");
+                i--;
                 continue;
             }
             System.out.println(question.getQuestion());
             System.out.println("\n");
-            displayQuestions(question);
-            String userAnswer = scan.nextLine();
-            if (checkAnswer(userAnswer, question.getCorrectAnswer())) {
+            int correctAnswer = displayQuestions(question);
+            int userAnswer;
+            while (true) {
+                if (scan.hasNextInt()) {
+                    userAnswer = scan.nextInt();
+                    if (checkValidSelection(userAnswer)) {
+                        break;
+                    } else {
+                        System.out.println("Please enter the number next to the answer. Either '1', '2', '3', or '4'");
+                    }
+                } else {
+                    System.out.println("Please enter the number next to the answer. Either '1', '2', '3', or '4'");
+                }
+            }
+            if (userAnswer - 1 == correctAnswer) {
                 awardScore(currentPlayer, question.getValue());
                 System.out.println();
                 System.out.println("\nCorrect answer!");
+                if (i != 14) {
+                    if (currentPlayer.equals("1")) {
+                        System.out.println("Player 1, it's still you're turn");
+                    } else {
+                        System.out.println("Player 2, it's still you're turn");
+                    }
+                }
             } else {
                 System.out.println("Incorrect. The correct answer is: " + question.getCorrectAnswer());
                 if (i != 14) {
                     System.out.println("You've lost your turn");
+                    if (currentPlayer.equals("1")) {
+                        System.out.println("Player 2, it's now your turn!");
+                    } else {
+                        System.out.println("Player 1, it's now your turn!");
+                    }
                 }
                 currentPlayer = changePlayer(currentPlayer);
             }
@@ -87,26 +113,23 @@ public class Main {
         return points != 100 && points != 200 && points != 300 && points != 400 && points != 500;
     }
 
-    public static boolean checkAnswer(String userAnswer, String correctAnswer) {
-        return userAnswer.equalsIgnoreCase(correctAnswer);
-    }
-
-    public static void displayQuestions(Trivia question) {
-        int placeToPutCorrectAnswer = (int)(1 + Math.random() * 3);
+    public static int displayQuestions(Trivia question) {
+        int placeToPutCorrectAnswer = (int)(Math.random() * 4);
         boolean correctAnswerPrintedYet = false;
         for (int i = 0; i < 4; i++) {
             int j = i;
 
             if (i == placeToPutCorrectAnswer) {
-                System.out.println("\t" + question.getCorrectAnswer());
+                System.out.println("\t" + (i + 1) + ": " + question.getCorrectAnswer());
                 correctAnswerPrintedYet = true;
                 continue;
             }
             if (correctAnswerPrintedYet) {
                 j--;
             }
-            System.out.println("\t" + question.getIncorrectAnswer(j));
+            System.out.println("\t" + (i + 1)  + ": " + question.getIncorrectAnswer(j));
         }
+        return placeToPutCorrectAnswer;
     }
 
     public static String changePlayer(String currentPlayer) {
@@ -124,5 +147,9 @@ public class Main {
         } else {
             Scoreboard.getInstance().setPlayer2(score);
         }
+    }
+
+    public static boolean checkValidSelection(int userAnswer) {
+        return userAnswer == 1 || userAnswer == 2 || userAnswer == 3 || userAnswer == 4;
     }
 }

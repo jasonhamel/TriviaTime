@@ -39,8 +39,10 @@ public class Scoreboard {
     public String winner() {
         if (player1 > player2) {
             return "Player 1 wins with a score of " + player1 + ". Player 2 lost with a score of " + player2;
+        } else if (player2 > player1) {
+           return "Player 2 wins with a score of " + player2 + ". Player 1 lost with a score of " + player1;
         }
-        return "Player 2 wins with a score of " + player2 + ". Player 1 lost with a score of " + player1;
+        return "Tie game!";
     }
 
     public void clear() {
